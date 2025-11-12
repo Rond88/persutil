@@ -90,4 +90,12 @@ public class BlogService {
     public Long count() {
         return oBlogRepository.count();
     }
+
+    public Long rellena(Long cantidad) {
+        Long total = 0L;
+        for (int i = 0; i < cantidad; i++) {
+            total = rellenarBlog();
+        }
+        return total;
+    }
 }

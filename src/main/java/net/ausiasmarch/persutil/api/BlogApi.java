@@ -58,6 +58,11 @@ public class BlogApi {
     public ResponseEntity<Long> rellenarBlog() {
         return ResponseEntity.ok(oBlogService.rellenarBlog());
     }
+    
+    @PostMapping("/rellena/{cantidad}")
+    public ResponseEntity<Long> rellenarBlogs(@PathVariable Long cantidad) {
+        return ResponseEntity.ok(oBlogService.rellena(cantidad));
+    }
 
     // -------------CRUD----------------//
 
