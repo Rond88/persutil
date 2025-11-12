@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.repository.BlogRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class BlogService {
     public final static int NUM_PALABRAS = 5;
@@ -62,5 +65,25 @@ public class BlogService {
         oBlogEntity.setFechaModificacion(null);
         oBlogRepository.save(oBlogEntity);
         return oBlogEntity.getId();
+    }
+
+    public Long update(BlogEntity oBlogEntity) {
+        BlogEntity existingBlog = oBlogRepository.findById(oBlogEntity.getId())
+                .orElseThrow(() -> new RuntimeException("Blog not found"));
+        existingBlog.setTitulo(oBlogEntity.getTitulo());
+        existingBlog.setContenido(oBlogEntity.getContenido());
+        existingBlog.setEtiquetas(oBlogEntity.getEtiquetas());
+        existingBlog.setFechaModificacion(LocalDateTime.now());
+        oBlogRepository.save(existingBlog);
+        return existingBlog.getId();
+    }
+
+    public Long delete(Long id) {
+        oBlogRepository.deleteById(id);
+        return id;
+    }
+
+    public Page<BlogEntity> getPage(Pageable oPageable) {
+        return oBlogRepository.findAll(oPageable);
     }
 }
