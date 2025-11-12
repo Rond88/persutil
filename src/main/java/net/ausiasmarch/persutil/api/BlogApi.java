@@ -18,11 +18,11 @@ import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.service.AleatorioService;
 import net.ausiasmarch.persutil.service.BlogService;
 
-@RestController //con esto le decimos que es un controlador de tipo REST
-@RequestMapping("/blog") //con esto le decimos la ruta inicial de este controlador
+@RestController // con esto le decimos que es un controlador de tipo REST
+@RequestMapping("/blog") // con esto le decimos la ruta inicial de este controlador
 public class BlogApi {
 
-    //inyectamos el servicio de aleatorio
+    // inyectamos el servicio de aleatorio
     @Autowired
     AleatorioService oAleatorioService;
 
@@ -34,20 +34,21 @@ public class BlogApi {
         return new ResponseEntity<>("\"¡Hola, Blog!\"", HttpStatus.OK);
     }
 
-    @GetMapping("/aleatorio") //endpoint
+    @GetMapping("/aleatorio") // endpoint
     public ResponseEntity<Integer> aleatorio() {
         int numeroAleatorio = (int) (Math.random() * 100) + 1; // Genera un número aleatorio entre 1 y 100
         return ResponseEntity.ok(numeroAleatorio);
     }
 
-    @GetMapping("/aleatorio/{min}/{max}") //endpoint
+    @GetMapping("/aleatorio/{min}/{max}") // endpoint
     public ResponseEntity<Integer> aleatorioEnRango(@PathVariable int min,
             @PathVariable int max) {
-        int numeroAleatorio = (int) (Math.random() * (max - min + 1)) + min; // Genera un número aleatorio entre min y max
+        int numeroAleatorio = (int) (Math.random() * (max - min + 1)) + min; // Genera un número aleatorio entre min y
+                                                                             // max
         return ResponseEntity.ok(numeroAleatorio);
     }
 
-    @GetMapping("/aleatorio/service/{min}/{max}") //endpoint
+    @GetMapping("/aleatorio/service/{min}/{max}") // endpoint
     public ResponseEntity<Integer> aleatorioUsandoServiceEnRango(@PathVariable int min,
             @PathVariable int max) {
         return ResponseEntity.ok(oAleatorioService.generarNumeroAleatorioEnteroEnRango(min, max));
@@ -57,6 +58,8 @@ public class BlogApi {
     public ResponseEntity<Long> rellenarBlog() {
         return ResponseEntity.ok(oBlogService.rellenarBlog());
     }
+
+    // -------------CRUD----------------//
 
     // obtener un blog por id y mostrarlo en formato JSON
     @GetMapping("/{id}")
@@ -70,12 +73,13 @@ public class BlogApi {
         return ResponseEntity.ok(oBlogService.create(blogEntity));
     }
 
+    // actualizar posts
     @PutMapping("")
     public ResponseEntity<Long> update(@RequestBody BlogEntity blogEntity) {
         return ResponseEntity.ok(oBlogService.update(blogEntity));
     }
 
-    //borar posts
+    // borar posts
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         return ResponseEntity.ok(oBlogService.delete(id));
@@ -85,5 +89,10 @@ public class BlogApi {
     @GetMapping("")
     public ResponseEntity<Page<BlogEntity>> getPage(Pageable oPageable) {
         return ResponseEntity.ok(oBlogService.getPage(oPageable));
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> count() {
+        return ResponseEntity.ok(oBlogService.count());
     }
 }

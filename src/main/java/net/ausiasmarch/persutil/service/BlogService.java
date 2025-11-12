@@ -86,4 +86,8 @@ public class BlogService {
     public Page<BlogEntity> getPage(Pageable oPageable) {
         return oBlogRepository.findAll(oPageable);
     }
+
+    public Long count() {
+        return oBlogRepository.count();
+    }
 }
