@@ -56,4 +56,11 @@ public class BlogService {
     public BlogEntity get(Long id) {
         return oBlogRepository.findById(id).orElseThrow(() -> new RuntimeException("Blog not found"));
     }
+
+    public Long create(BlogEntity oBlogEntity) {
+        oBlogEntity.setFechaCreacion(LocalDateTime.now()); // Establecer la fecha de creación sobreescribiendo cualquier valor entrante
+        oBlogEntity.setFechaModificacion(null);
+        oBlogRepository.save(oBlogEntity);
+        return oBlogEntity.getId();
+    }
 }
