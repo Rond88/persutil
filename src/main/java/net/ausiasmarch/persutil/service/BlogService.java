@@ -1,6 +1,7 @@
 package net.ausiasmarch.persutil.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,16 +19,16 @@ public class BlogService {
     BlogRepository oBlogRepository;
 
     public Long rellenarBlog() {
-        // crear un arrayList con 25 palabras aleatorias
-
-        List<String> palabras = Arrays.asList(
+        // array de palabras
+        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(
                 "sol", "luna", "estrellas", "planeta", "galaxia",
                 "arbol", "flor", "rio", "montaña", "nube",
                 "casa", "coche", "libro", "ordenador", "telefono",
                 "musica", "arte", "historia", "ciencia", "deporte",
                 "familia", "amigo", "trabajo", "escuela", "comida",
                 "viaje", "tiempo", "agua", "fuego", "tierra",
-                "alegria", "paz", "esperanza", "silencio", "sueño");
+                "alegria", "paz", "esperanza", "silencio", "sueño"
+        ));
         
 
         // Lógica para rellenar el blog
@@ -42,7 +43,7 @@ public class BlogService {
     
         return oBlogRepository.count();
     }
-    // Crear contenido de cinco palabras aleatorias
+    // contenido de cinco palabras aleatorias
     public String crearContenidoAleatorio(List<String> palabras) {
         StringBuilder contenido = new StringBuilder();
         for (int i = 0; i < NUM_PALABRAS; i++) {
@@ -50,5 +51,9 @@ public class BlogService {
             contenido.append(palabras.get(indiceAleatorio)).append(" ");
         }
         return contenido.toString();
+    }
+
+    public BlogEntity get(Long id) {
+        return oBlogRepository.findById(id).orElseThrow(() -> new RuntimeException("Blog not found"));
     }
 }

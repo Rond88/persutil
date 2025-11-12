@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.service.AleatorioService;
 import net.ausiasmarch.persutil.service.BlogService;
 
@@ -40,7 +41,7 @@ public class BlogApi {
         return ResponseEntity.ok(numeroAleatorio);
     }
 
-     @GetMapping("/aleatorio/service/{min}/{max}") //endpoint
+    @GetMapping("/aleatorio/service/{min}/{max}") //endpoint
     public ResponseEntity<Integer> aleatorioUsandoServiceEnRango(@PathVariable int min,
             @PathVariable int max) {
         return ResponseEntity.ok(oAleatorioService.generarNumeroAleatorioEnteroEnRango(min, max));
@@ -49,5 +50,11 @@ public class BlogApi {
     @GetMapping("/rellenauno")
     public ResponseEntity<Long> rellenarBlog() {
         return ResponseEntity.ok(oBlogService.rellenarBlog());
+    }
+
+    // obtener un blog por id y mostrarlo en formato JSON
+    @GetMapping("/{id}")
+    public ResponseEntity<BlogEntity> get(@PathVariable Long id) {
+        return ResponseEntity.ok(oBlogService.get(id));
     }
 }
