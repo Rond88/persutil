@@ -1,10 +1,11 @@
 package net.ausiasmarch.persutil.api;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import net.ausiasmarch.persutil.entity.BlogEntity;
 import net.ausiasmarch.persutil.service.AleatorioService;
 import net.ausiasmarch.persutil.service.BlogService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*") // Permitir solicitudes CORS desde cualquier origen
 @RestController // con esto le decimos que es un controlador de tipo REST
 @RequestMapping("/blog") // con esto le decimos la ruta inicial de este controlador
 public class BlogApi {
@@ -60,7 +62,7 @@ public class BlogApi {
     }
     
     @PostMapping("/rellena/{cantidad}")
-    public ResponseEntity<Long> rellenarBlogs(@PathVariable Long cantidad) {
+    public ResponseEntity<Long> rellena(@PathVariable Long cantidad) {
         return ResponseEntity.ok(oBlogService.rellena(cantidad));
     }
 
